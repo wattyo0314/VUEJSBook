@@ -70,6 +70,20 @@ body {
   color: #fff;
 }
 
+.item .status2 {
+  position: absolute;
+  top: 17%;
+  border-radius: 50%;
+  width: 4em;
+  height: 4em;
+  font-size: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #28a44a;
+  color: #fff;
+}
+
 .item .detail {
   text-align: center;
 }

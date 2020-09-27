@@ -10,6 +10,8 @@ var app = new Vue({
     showSaleItem: false,
     //「送料無料」のチェック状態（true：チェック有り、false：チェック無し）
     showDelvFree: false,
+    // 「店長のおすすめ」のチェック状態(true:チェックあり、false:チェック無し)
+    showRecommendItem: false,
     //「並び替え」の選択値（1：標準、2：価格が安い順）
     sortOrder: 1,
     // 商品リスト
@@ -21,6 +23,7 @@ var app = new Vue({
         image: "images/01.jpg",
         delv: 0,
         isSale: true,
+        RecommendManager: true,
       },
       {
         id: 2,
@@ -29,6 +32,7 @@ var app = new Vue({
         image: "images/02.jpg",
         delv: 0,
         isSale: true,
+        RecommendManager: false,
       },
       {
         id: 3,
@@ -37,6 +41,7 @@ var app = new Vue({
         image: "images/03.jpg",
         delv: 240,
         isSale: true,
+        RecommendManager: true,
       },
       {
         id: 4,
@@ -45,6 +50,7 @@ var app = new Vue({
         image: "images/04.jpg",
         delv: 0,
         isSale: true,
+        RecommendManager: false,
       },
       {
         id: 5,
@@ -53,6 +59,7 @@ var app = new Vue({
         image: "images/05.jpg",
         delv: 0,
         isSale: false,
+        RecommendManager: true,
       },
       {
         id: 6,
@@ -61,6 +68,7 @@ var app = new Vue({
         image: "images/06.jpg",
         delv: 0,
         isSale: false,
+        RecommendManager: false,
       },
     ],
   },
@@ -81,18 +89,25 @@ var app = new Vue({
           //「送料無料」チェック有りで、送料有りの商品の場合
           isShow = false; // この商品は表示しない
         }
-        // 表示対象の商品だけを新しい配列に追加する
+        if (this.showRecommendItem && !this.products[i].RecommendManager) {
+          isShow = false;
+        }
         if (isShow) {
+          // 表示対象の商品だけを新しい配列に追加する
           newList.push(this.products[i]);
         }
       }
       // 新しい配列を並び替える
-      if (this.sortOrder == 1) {
+      if (this.sortOrder === 1) {
         // 元の順番にpushしているので並び替え済み
-      } else if (this.sortOrder == 2) {
+      } else if (this.sortOrder === 2) {
         // 価格が安い順に並び替える
         newList.sort(function (a, b) {
           return a.price - b.price;
+        });
+      } else if (this.sortOrder === 3) {
+        newList.sort(function (a, b) {
+          return b.price - a.price;
         });
       }
       // 絞り込み後の商品リストを返す
